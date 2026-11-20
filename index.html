@@ -190,9 +190,28 @@ footer .brand .w1 { color: var(--hero-fg); }
 .empty { border: 2px dashed var(--line); border-radius: 8px; padding: 48px 24px; text-align: center; color: var(--muted); }
 .empty h3 { color: var(--fg); font-size: 1.3rem; margin-bottom: 6px; }
 .slideshow { position: relative; aspect-ratio: 16 / 9; max-width: 100%; background: var(--hero-bg); border-radius: 8px; overflow: hidden; }
-.slideshow img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s; }
+.slideshow img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.8s; }
 .slideshow img.on { opacity: 1; }
 .slideshow .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 36px 18px 14px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)); color: #fff; font-size: 0.95rem; }
+.liveshow { background: var(--hero-bg); color: var(--hero-fg); padding-block: 28px; }
+.liveshow .ls-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.liveshow .ls-head p { color: var(--hero-muted); font-size: 0.9rem; }
+.liveshow .ls-head h2 { font-size: 1.35rem; color: var(--hero-fg); }
+.ls-stage { position: relative; aspect-ratio: 16 / 9; max-height: 560px; width: 100%; border-radius: 8px; overflow: hidden; background: #0b1424; touch-action: pan-y; }
+.liveshow.compact .ls-stage { aspect-ratio: 21 / 7; max-height: 260px; }
+.ls-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s; pointer-events: none; }
+.ls-slide.on { opacity: 1; pointer-events: auto; }
+.ls-slide .bg { position: absolute; inset: -20px; background-size: cover; background-position: center; filter: blur(22px) brightness(0.55); }
+.ls-slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.ls-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 18px 14px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.75)); color: #fff; font-size: 0.95rem; }
+.liveshow.compact .ls-cap { padding: 22px 14px 8px; font-size: 0.85rem; }
+.ls-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(0, 0, 0, 0.45); color: #fff; font-size: 1.3rem; cursor: pointer; z-index: 2; }
+.ls-btn:hover, .ls-btn:focus-visible { background: rgba(0, 0, 0, 0.7); }
+.ls-prev { left: 10px; } .ls-next { right: 10px; }
+.ls-dots { display: flex; gap: 8px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+.ls-dots button { width: 10px; height: 10px; border-radius: 50%; border: 0; padding: 0; background: var(--hero-muted); opacity: 0.5; cursor: pointer; }
+.ls-dots button[aria-current="true"] { background: var(--ochre-bright); opacity: 1; }
+@media (max-width: 600px) { .liveshow.compact .ls-stage { aspect-ratio: 16 / 9; } .ls-btn { width: 34px; height: 34px; } }
 .thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 16px; }
 .thumbs button { padding: 0; border: 2px solid transparent; border-radius: 6px; overflow: hidden; background: var(--surface); cursor: pointer; aspect-ratio: 4 / 3; }
 .thumbs button[aria-current="true"] { border-color: var(--ochre-bright); }
@@ -262,6 +281,17 @@ footer .brand .w1 { color: var(--hero-fg); }
 </header>
 
 <main>
+<section class="liveshow" id="liveshow" aria-label="Launch day moments" hidden>
+  <div class="wrap">
+    <div class="ls-head"><h2>Live from the launch</h2><p>Moi University Annex Campus · 20 November 2026</p></div>
+    <div class="ls-stage" id="ls-stage" tabindex="0" aria-roledescription="carousel">
+      <button type="button" class="ls-btn ls-prev" aria-label="Previous photo">&#8249;</button>
+      <button type="button" class="ls-btn ls-next" aria-label="Next photo">&#8250;</button>
+    </div>
+    <div class="ls-dots" id="ls-dots"></div>
+  </div>
+</section>
+
 
 <!-- HOME -->
 <div class="view" id="v-home">
@@ -588,7 +618,7 @@ footer .brand .w1 { color: var(--hero-fg); }
   <div class="band" aria-hidden="true"></div>
   <section>
     <div class="wrap">
-      <div id="gallery-empty" class="empty"><h3>Photos coming soon</h3><p>Pictures from the launch on 20 November will appear here, in a slideshow and a grid.</p></div>
+      <div id="gallery-empty" class="empty"><h3>Photos coming soon</h3><p>Pictures from the launch on 20 November will appear here.</p></div>
       <div id="gallery-live" hidden>
         <div class="slideshow" id="slides" aria-live="off"></div>
         <div class="thumbs" id="thumbs"></div>
@@ -777,7 +807,18 @@ footer .brand .w1 { color: var(--hero-fg); }
   // Paste real links between the quotes. Empty links leave the button in its "coming soon" state.
   var LINKS = { member: "https://tally.so/r/2jaZJD", volunteer: "https://tally.so/r/7XLeV0", rsvp: "https://tally.so/r/VpQ6el", contact: "https://tally.so/r/bZjD81", feedback: "https://tally.so/r/EqdORL", symposium: "https://tally.so/r/bZjPZg", questions: "https://tally.so/r/7XLe1R" };
   // Photos for the Gallery. Add { src: "image link", caption: "what is happening" } for each photo.
-  var GALLERY = [];
+  var GALLERY = [
+    { src: "img/launch-01.jpg", caption: "Young people, elders and guests together after the launch at Moi University Annex Campus." },
+    { src: "img/launch-02.jpg", caption: "Presenting the Transmission Delta, how we measure whether tradition is passing between generations." },
+    { src: "img/launch-03.jpg", caption: "A speaker introduces AfriLiving Heritage Lab to the room." },
+    { src: "img/launch-04.jpg", caption: "Three in four Kenyans are under 35. The Lab is led by young people." },
+    { src: "img/launch-05.jpg", caption: "Young people listen during the opening session." },
+    { src: "img/launch-06.jpg", caption: "A participant raises a hand to ask a question." },
+    { src: "img/launch-07.jpg", caption: "The audience at the launch, 20 November 2026." },
+    { src: "img/launch-08.jpg", caption: "Guests and participants gathered in the courtyard after the launch." },
+    { src: "img/launch-09.jpg", caption: "The Lab's story and logo on screen at the launch." },
+    { src: "img/launch-10.jpg", caption: "A guest speaker addresses the launch." }
+  ];
   // Articles. Add { title, source, date, summary, url } for each one.
   var ARTICLES = [
     { title: "Kenya is recording its heritage. Is anyone passing it on?", source: "LinkedIn", date: "November 2026", summary: "Our blog on digital heritage work in Kenya, and the gap between recording heritage and passing it on.", url: "https://www.linkedin.com/pulse/kenya-recording-its-heritage-anyone-passing-diminah-asila--reckf" }
@@ -860,6 +901,54 @@ footer .brand .w1 { color: var(--hero-fg); }
     show(0); start();
   })();
 
+
+  (function () {
+    var box = document.getElementById("liveshow");
+    if (!box || !GALLERY.length) return;
+    var stage = document.getElementById("ls-stage"), dots = document.getElementById("ls-dots");
+    var prev = stage.querySelector(".ls-prev");
+    var frag = document.createDocumentFragment();
+    GALLERY.forEach(function (g, i) {
+      var d = document.createElement("div"); d.className = "ls-slide" + (i === 0 ? " on" : "");
+      var bg = document.createElement("div"); bg.className = "bg"; bg.style.backgroundImage = "url(" + g.src + ")";
+      var im = document.createElement("img"); im.src = g.src; im.alt = g.caption || "Photo from the Lab"; if (i > 1) im.loading = "lazy";
+      var c = document.createElement("div"); c.className = "ls-cap"; c.textContent = g.caption || "";
+      d.appendChild(bg); d.appendChild(im); d.appendChild(c); frag.appendChild(d);
+    });
+    stage.insertBefore(frag, prev);
+    dots.innerHTML = GALLERY.map(function (g, i) { return '<button type="button" data-i="' + i + '" aria-label="Show photo ' + (i + 1) + '"></button>'; }).join("");
+    var slides = stage.querySelectorAll(".ls-slide"), dbtn = dots.querySelectorAll("button"), cur = 0, timer = null, paused = false;
+    function show(i) {
+      cur = (i + slides.length) % slides.length;
+      slides.forEach(function (s, k) { s.classList.toggle("on", k === cur); });
+      dbtn.forEach(function (b, k) { if (k === cur) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current"); });
+    }
+    function start() { if (timer || slides.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; timer = setInterval(function () { if (!paused) show(cur + 1); }, 4500); }
+    stage.querySelector(".ls-next").addEventListener("click", function () { show(cur + 1); });
+    prev.addEventListener("click", function () { show(cur - 1); });
+    dbtn.forEach(function (b) { b.addEventListener("click", function () { show(Number(b.getAttribute("data-i"))); }); });
+    stage.addEventListener("mouseenter", function () { paused = true; });
+    stage.addEventListener("mouseleave", function () { paused = false; });
+    stage.addEventListener("focusin", function () { paused = true; });
+    stage.addEventListener("focusout", function () { paused = false; });
+    stage.addEventListener("keydown", function (e) { if (e.key === "ArrowRight") show(cur + 1); if (e.key === "ArrowLeft") show(cur - 1); });
+    var x0 = null;
+    stage.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; paused = true; }, { passive: true });
+    stage.addEventListener("touchend", function (e) { if (x0 !== null) { var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); } x0 = null; setTimeout(function () { paused = false; }, 4000); }, { passive: true });
+    window.placeLiveShow = function (h) {
+      var view = document.getElementById("v-" + h);
+      if (!view || h === "gallery") { box.hidden = true; return; }
+      var after = null;
+      if (h === "home") after = view.querySelector(".hero");
+      else { var ph = view.querySelector(".pagehead"); after = ph && ph.nextElementSibling && ph.nextElementSibling.classList.contains("band") ? ph.nextElementSibling : ph; }
+      if (!after) { box.hidden = true; return; }
+      after.parentNode.insertBefore(box, after.nextSibling);
+      box.classList.toggle("compact", h !== "home");
+      box.hidden = false;
+    };
+    start();
+  })();
+
   var VIEWS = ["home", "about", "launch", "programmes", "applications", "gallery", "articles", "ventures", "resources", "feedback", "contact", "support"];
   function route() {
     var h = (location.hash || "").replace("#", "");
@@ -868,6 +957,7 @@ footer .brand .w1 { color: var(--hero-fg); }
     document.querySelectorAll(".menu a").forEach(function (a) {
       if (a.getAttribute("href") === "#" + h) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
     });
+    if (window.placeLiveShow) window.placeLiveShow(h);
     window.scrollTo(0, 0);
   }
   window.addEventListener("hashchange", route);
