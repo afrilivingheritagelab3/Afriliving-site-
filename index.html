@@ -193,25 +193,42 @@ footer .brand .w1 { color: var(--hero-fg); }
 .slideshow img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.8s; }
 .slideshow img.on { opacity: 1; }
 .slideshow .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 36px 18px 14px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)); color: #fff; font-size: 0.95rem; }
-.liveshow { background: var(--hero-bg); color: var(--hero-fg); padding-block: 28px; }
-.liveshow .ls-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
-.liveshow .ls-head p { color: var(--hero-muted); font-size: 0.9rem; }
-.liveshow .ls-head h2 { font-size: 1.35rem; color: var(--hero-fg); }
-.ls-stage { position: relative; aspect-ratio: 16 / 9; max-height: 560px; width: 100%; border-radius: 8px; overflow: hidden; background: #0b1424; touch-action: pan-y; }
-.liveshow.compact .ls-stage { aspect-ratio: 21 / 7; max-height: 260px; }
+.liveshow { background: var(--hero-bg); color: var(--hero-fg); padding: 0; }
+.ls-slide.full .ls-copy { align-items: flex-start; }
+.ls-slide.full .ls-txt { padding-top: 40px; }
+.liveshow.compact .ls-slide.full .ls-txt { padding-top: 20px; }
+.ls-stage { position: relative; height: clamp(460px, 74vh, 660px); overflow: hidden; background: var(--hero-bg); touch-action: pan-y; }
+.liveshow.compact .ls-stage { height: clamp(320px, 44vh, 420px); }
 .ls-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s; pointer-events: none; }
 .ls-slide.on { opacity: 1; pointer-events: auto; }
-.ls-slide .bg { position: absolute; inset: -20px; background-size: cover; background-position: center; filter: blur(22px) brightness(0.55); }
-.ls-slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
-.ls-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 18px 14px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.75)); color: #fff; font-size: 0.95rem; }
-.liveshow.compact .ls-cap { padding: 22px 14px 8px; font-size: 0.85rem; }
-.ls-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(0, 0, 0, 0.45); color: #fff; font-size: 1.3rem; cursor: pointer; z-index: 2; }
+.ls-photo { position: absolute; inset: 0; }
+.ls-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ls-slide.full .ls-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(14, 28, 52, 0.92) 0%, rgba(14, 28, 52, 0.7) 42%, rgba(14, 28, 52, 0.15) 100%); }
+.ls-slide.split .ls-photo { left: auto; width: 46%; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 28%); mask-image: linear-gradient(90deg, transparent 0, #000 28%); }
+.ls-copy { position: absolute; inset: 0; display: flex; align-items: center; }
+.ls-copy .wrap { width: 100%; }
+.ls-txt { max-width: 520px; padding-block: 24px; }
+.ls-kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ochre-bright); margin-bottom: 14px; }
+.ls-kicker::before { content: ""; width: 28px; height: 3px; background: var(--ochre-bright); border-radius: 2px; }
+.ls-title { font-family: var(--font-display); font-size: clamp(1.9rem, 4.4vw, 3.2rem); line-height: 1.08; font-weight: 700; color: #fff; text-wrap: balance; margin: 0 0 14px; }
+.ls-text { font-size: 1.05rem; line-height: 1.55; color: var(--hero-muted); margin: 0 0 22px; }
+.liveshow.compact .ls-title { font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: 10px; }
+.liveshow.compact .ls-text { font-size: 0.95rem; margin-bottom: 16px; }
+.ls-meta { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); bottom: 14px; font-size: 0.78rem; color: rgba(255, 255, 255, 0.75); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
+.ls-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(0, 0, 0, 0.4); color: #fff; font-size: 1.5rem; cursor: pointer; z-index: 3; }
 .ls-btn:hover, .ls-btn:focus-visible { background: rgba(0, 0, 0, 0.7); }
-.ls-prev { left: 10px; } .ls-next { right: 10px; }
-.ls-dots { display: flex; gap: 8px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
-.ls-dots button { width: 10px; height: 10px; border-radius: 50%; border: 0; padding: 0; background: var(--hero-muted); opacity: 0.5; cursor: pointer; }
+.ls-prev { left: 12px; } .ls-next { right: 12px; }
+.ls-dots { position: absolute; left: 0; right: 0; bottom: 14px; display: flex; gap: 9px; justify-content: center; z-index: 3; }
+.ls-dots button { width: 10px; height: 10px; border-radius: 50%; border: 0; padding: 0; background: #fff; opacity: 0.45; cursor: pointer; }
 .ls-dots button[aria-current="true"] { background: var(--ochre-bright); opacity: 1; }
-@media (max-width: 600px) { .liveshow.compact .ls-stage { aspect-ratio: 16 / 9; } .ls-btn { width: 34px; height: 34px; } }
+@media (max-width: 760px) {
+  .ls-stage { height: 580px; } .liveshow.compact .ls-stage { height: 440px; }
+  .ls-slide.split .ls-photo { width: 100%; -webkit-mask-image: none; mask-image: none; }
+  .ls-slide .ls-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(14, 28, 52, 0.96) 0%, rgba(14, 28, 52, 0.82) 42%, rgba(14, 28, 52, 0.1) 80%); }
+  .ls-copy, .ls-slide.full .ls-copy { align-items: flex-end; } .ls-txt, .ls-slide.full .ls-txt { padding-bottom: 52px; padding-top: 24px; max-width: none; }
+  .ls-btn { display: none; } .ls-meta { display: none; }
+  .liveshow.compact .ls-text, .liveshow.compact .ls-slide .btn { display: none; }
+}
 .thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 16px; }
 .thumbs button { padding: 0; border: 2px solid transparent; border-radius: 6px; overflow: hidden; background: var(--surface); cursor: pointer; aspect-ratio: 4 / 3; }
 .thumbs button[aria-current="true"] { border-color: var(--ochre-bright); }
@@ -281,13 +298,10 @@ footer .brand .w1 { color: var(--hero-fg); }
 </header>
 
 <main>
-<section class="liveshow" id="liveshow" aria-label="Launch day moments" hidden>
-  <div class="wrap">
-    <div class="ls-head"><h2>Live from the launch</h2><p>Moi University Annex Campus · 20 November 2026</p></div>
-    <div class="ls-stage" id="ls-stage" tabindex="0" aria-roledescription="carousel">
-      <button type="button" class="ls-btn ls-prev" aria-label="Previous photo">&#8249;</button>
-      <button type="button" class="ls-btn ls-next" aria-label="Next photo">&#8250;</button>
-    </div>
+<section class="liveshow" id="liveshow" aria-label="About the Lab, with photos from our launch" hidden>
+  <div class="ls-stage" id="ls-stage" tabindex="0" aria-roledescription="carousel">
+    <button type="button" class="ls-btn ls-prev" aria-label="Previous slide">&#8249;</button>
+    <button type="button" class="ls-btn ls-next" aria-label="Next slide">&#8250;</button>
     <div class="ls-dots" id="ls-dots"></div>
   </div>
 </section>
@@ -919,25 +933,28 @@ footer .brand .w1 { color: var(--hero-fg); }
   (function () {
     var box = document.getElementById("liveshow");
     if (!box || !GALLERY.length) return;
+    var SLIDES = [{"i": 0, "l": "full", "k": "AfriLiving Heritage Lab", "t": "Keeping living traditions alive", "x": "A youth-led initiative safeguarding living traditions in the digital age. We launched on 20 November 2026 at Moi University Annex Campus.", "b": "Join Youth Voices", "h": "#applications"}, {"i": 1, "l": "split", "k": "Our mission", "t": "Bridging elders and youth", "x": "We bridge elders who hold indigenous wisdom and tech-savvy youth through ethical, community-governed fieldwork, measure real knowledge transfer, and use digital tools to keep African heritage alive.", "b": "About us", "h": "#about"}, {"i": 2, "l": "split", "k": "Our vision", "t": "Heritage that is practised, not only stored", "x": "To be Africa's leading youth-driven movement for living heritage, turning passive digital archiving into active, intergenerational knowledge transmission.", "b": "Read more", "h": "#about"}, {"i": 3, "l": "split", "k": "UNESCO 2003 Convention", "t": "Rooted in the Convention", "x": "We are guided by the UNESCO Convention for the Safeguarding of the Intangible Cultural Heritage (2003), in particular Articles 13, 14 and 15: documentation, education and community participation.", "b": "How we work", "h": "#about"}, {"i": 4, "l": "split", "k": "SDG 4.7 · Education for culture", "t": "Elders teaching young people", "x": "Learning that values cultural diversity and the contribution of culture to sustainable development.", "b": "See the SDGs", "h": "#about"}, {"i": 5, "l": "split", "k": "SDG 11.4 · Safeguarding heritage", "t": "Practised and shared, not only stored", "x": "Strengthening efforts to protect cultural heritage by keeping it alive in the people who practise it.", "b": "See the SDGs", "h": "#about"}, {"i": 6, "l": "split", "k": "SDG 10 · Reduced inequalities", "t": "Every voice counts", "x": "Giving young people and elders a voice, and letting communities control how their knowledge is used.", "b": "See the SDGs", "h": "#about"}, {"i": 7, "l": "full", "k": "SDG 17 · Partnerships", "t": "Stronger together", "x": "Working with communities, schools, cultural institutions and youth groups across Kenya, Africa and beyond.", "b": "Get in touch", "h": "#contact"}, {"i": 8, "l": "split", "k": "Youth Voices · Open now", "t": "Tell us what culture means to you", "x": "Open until 20 December. Share in the way that suits you: an essay, a video, a piece of art or a photo. There is time to record, edit and share.", "b": "Join Youth Voices", "h": "#applications"}, {"i": 9, "l": "split", "k": "Sauti Zetu · From 20 December", "t": "Our voices, with our elders", "x": "Young people are paired with elders and knowledge-holders to document oral histories and living traditions in their own counties.", "b": "See the programme", "h": "#programmes"}];
     var stage = document.getElementById("ls-stage"), dots = document.getElementById("ls-dots");
     var prev = stage.querySelector(".ls-prev");
     var frag = document.createDocumentFragment();
-    GALLERY.forEach(function (g, i) {
-      var d = document.createElement("div"); d.className = "ls-slide" + (i === 0 ? " on" : "");
-      var bg = document.createElement("div"); bg.className = "bg"; bg.style.backgroundImage = "url(" + g.src + ")";
-      var im = document.createElement("img"); im.src = g.src; im.alt = g.caption || "Photo from the Lab"; if (i > 1) im.loading = "lazy";
-      var c = document.createElement("div"); c.className = "ls-cap"; c.textContent = g.caption || "";
-      d.appendChild(bg); d.appendChild(im); d.appendChild(c); frag.appendChild(d);
+    SLIDES.forEach(function (sl, n) {
+      var g = GALLERY[sl.i]; if (!g) return;
+      var d = document.createElement("div"); d.className = "ls-slide " + sl.l + (n === 0 ? " on" : "");
+      d.innerHTML = '<div class="ls-photo"><img src="' + esc(g.src) + '" alt="' + esc(g.caption || "Photo from the Lab") + '"' + (n > 1 ? ' loading="lazy"' : "") + '></div>' +
+        '<div class="ls-copy"><div class="wrap"><div class="ls-txt"><p class="ls-kicker">' + esc(sl.k) + '</p><h2 class="ls-title">' + esc(sl.t) + '</h2><p class="ls-text">' + esc(sl.x) + '</p><a class="btn btn-ochre" href="' + esc(sl.h) + '">' + esc(sl.b) + '</a></div></div></div>' +
+        '<span class="ls-meta">Launch day, 20 November 2026</span>';
+      frag.appendChild(d);
     });
     stage.insertBefore(frag, prev);
-    dots.innerHTML = GALLERY.map(function (g, i) { return '<button type="button" data-i="' + i + '" aria-label="Show photo ' + (i + 1) + '"></button>'; }).join("");
-    var slides = stage.querySelectorAll(".ls-slide"), dbtn = dots.querySelectorAll("button"), cur = 0, timer = null, paused = false;
+    var slides = stage.querySelectorAll(".ls-slide");
+    dots.innerHTML = Array.prototype.map.call(slides, function (s, i) { return '<button type="button" data-i="' + i + '" aria-label="Show slide ' + (i + 1) + '"></button>'; }).join("");
+    var dbtn = dots.querySelectorAll("button"), cur = 0, timer = null, paused = false;
     function show(i) {
       cur = (i + slides.length) % slides.length;
       slides.forEach(function (s, k) { s.classList.toggle("on", k === cur); });
       dbtn.forEach(function (b, k) { if (k === cur) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current"); });
     }
-    function start() { if (timer || slides.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; timer = setInterval(function () { if (!paused) show(cur + 1); }, 4500); }
+    function start() { if (timer || slides.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; timer = setInterval(function () { if (!paused) show(cur + 1); }, 6500); }
     stage.querySelector(".ls-next").addEventListener("click", function () { show(cur + 1); });
     prev.addEventListener("click", function () { show(cur - 1); });
     dbtn.forEach(function (b) { b.addEventListener("click", function () { show(Number(b.getAttribute("data-i"))); }); });
@@ -948,7 +965,7 @@ footer .brand .w1 { color: var(--hero-fg); }
     stage.addEventListener("keydown", function (e) { if (e.key === "ArrowRight") show(cur + 1); if (e.key === "ArrowLeft") show(cur - 1); });
     var x0 = null;
     stage.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; paused = true; }, { passive: true });
-    stage.addEventListener("touchend", function (e) { if (x0 !== null) { var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); } x0 = null; setTimeout(function () { paused = false; }, 4000); }, { passive: true });
+    stage.addEventListener("touchend", function (e) { if (x0 !== null) { var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); } x0 = null; setTimeout(function () { paused = false; }, 5000); }, { passive: true });
     window.placeLiveShow = function (h) {
       var view = document.getElementById("v-" + h);
       if (!view || h === "gallery") { box.hidden = true; return; }
