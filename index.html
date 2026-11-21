@@ -333,7 +333,6 @@ footer .brand .w1 { color: var(--hero-fg); }
       <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About us</a></li>
-        <li><a href="#launch">Launch</a></li>
         <li><a href="#programmes">Programmes &amp; Events</a></li>
         <li><a href="#applications">Applications</a></li>
         <li><a href="#gallery">Gallery</a></li>
@@ -691,35 +690,6 @@ footer .brand .w1 { color: var(--hero-fg); }
   </section>
 </div>
 
-<!-- LAUNCH -->
-<div class="view" id="v-launch" hidden>
-  <div class="pagehead"><div class="wrap">
-    <p class="label">Our launch</p>
-    <h1>We launched on 20 November 2026</h1>
-    <p>Young people, elders and guests came together at Moi University Annex Campus to open the AfriLiving Heritage Lab. Youth Voices began that day.</p>
-  </div></div>
-  <div class="band" aria-hidden="true"></div>
-  <section>
-    <div class="wrap two">
-      <div>
-        <div class="datebox"><div class="d">20</div><div class="m">November 2026</div><div class="w">Friday</div></div>
-      </div>
-      <div>
-        <p class="label">Launch recap</p>
-        <h2>Thank you for coming</h2>
-        <dl class="facts">
-          <div><dt>Date</dt><dd>Friday 20 November 2026.</dd></div>
-          <div><dt>Venue</dt><dd>Moi University Annex Campus. The launch was the only event held on campus.</dd></div>
-          <div><dt>What happened</dt><dd>An introduction to the Lab, how young people and elders work together, and how to join.</dd></div>
-          <div><dt>What is next</dt><dd>Youth Voices is open until 20 December. Beyond Borders follows in early December, and Sauti Zetu begins on 20 December.</dd></div>
-          <div><dt>Photos</dt><dd>Pictures from the day are in the Gallery.</dd></div>
-        </dl>
-        <div class="cta-row"><a class="btn btn-solid" href="#applications">Join Youth Voices</a><a class="btn btn-outline" href="#gallery">See the gallery</a></div>
-      </div>
-    </div>
-  </section>
-</div>
-
 <!-- GALLERY -->
 <div class="view" id="v-gallery" hidden>
   <div class="pagehead"><div class="wrap">
@@ -1070,7 +1040,7 @@ footer .brand .w1 { color: var(--hero-fg); }
     start();
   })();
 
-  var VIEWS = ["home", "about", "launch", "programmes", "applications", "gallery", "articles", "ventures", "resources", "feedback", "contact", "support"];
+  var VIEWS = ["home", "about", "programmes", "applications", "gallery", "articles", "ventures", "resources", "feedback", "contact", "support"];
   function route() {
     var h = (location.hash || "").replace("#", "");
     if (VIEWS.indexOf(h) === -1) h = "home";
